@@ -19,7 +19,6 @@ class LinkedList:
             cur_head = cur_head.next
         return out_string
 
-
     def append(self, value):
 
         if self.head is None:
@@ -41,70 +40,96 @@ class LinkedList:
 
         return size
 
-def union(llist_1, llist_2):
-    l = set()
-    current = llist_1.head
-    while current:
-        l.add(current.value)
-        current = current.next
-    current = llist_2.head
-    while current:
-        l.add(current.value)
-        current = current.next
 
-    result = LinkedList()
-    for num in l:
-        result.append(num)
-    return result
+def union(llist_1, llist_2):
+    set1 = set()
+    set2 = set()
+
+    def add_to_set(llist, s):
+        p = llist.head
+        while p:
+            s.add(p.value)
+            p = p.next
+
+    add_to_set(llist_1, set1)
+    add_to_set(llist_2, set2)
+
+    res = LinkedList()
+    for e in set1.union(set2):
+        res.append(e)
+
+    return res
+
 
 def intersection(llist_1, llist_2):
-    l1 = set()
-    current = llist_1.head
-    while current:
-        l1.add(current.value)
-        current = current.next
-    l2 = set()
-    current = llist_2.head
-    while current:
-        l2.add(current.value)
-        current = current.next
+    set1 = set()
+    set2 = set()
 
-    l = l1.intersection(l2)
-    result = LinkedList()
-    for num in l:
-        result.append(num)
-    return result
+    def add_to_set(llist, s):
+        p = llist.head
+        while p:
+            s.add(p.value)
+            p = p.next
 
-# Test case 1
+    add_to_set(llist_1, set1)
+    add_to_set(llist_2, set2)
 
-linked_list_1 = LinkedList()
-linked_list_2 = LinkedList()
+    res = LinkedList()
+    for e in set1.intersection(set2):
+        res.append(e)
 
-element_1 = [3,2,4,35,6,65,6,4,3,21]
-element_2 = [6,32,4,9,6,1,11,21,1]
+    return res
 
-for i in element_1:
-    linked_list_1.append(i)
 
-for i in element_2:
-    linked_list_2.append(i)
+def test_case_1():
+    linked_list_1 = LinkedList()
+    linked_list_2 = LinkedList()
 
-print(union(linked_list_1,linked_list_2))
-print(intersection(linked_list_1,linked_list_2))
+    element_1 = [3, 2, 4, 35, 6, 65, 6, 4, 3, 21]
+    element_2 = [6, 32, 4, 9, 6, 1, 11, 21, 1]
 
-# Test case 2
+    for i in element_1:
+        linked_list_1.append(i)
 
-linked_list_3 = LinkedList()
-linked_list_4 = LinkedList()
+    for i in element_2:
+        linked_list_2.append(i)
 
-element_1 = [3,2,4,35,6,65,6,4,3,23]
-element_2 = [1,7,8,9,11,21,1]
+    print(union(linked_list_1, linked_list_2))
+    print(intersection(linked_list_1, linked_list_2))
 
-for i in element_1:
-    linked_list_3.append(i)
 
-for i in element_2:
-    linked_list_4.append(i)
+def test_case_2():
+    linked_list_3 = LinkedList()
+    linked_list_4 = LinkedList()
 
-print (union(linked_list_3,linked_list_4))
-print (intersection(linked_list_3,linked_list_4))
+    element_1 = [3, 2, 4, 35, 6, 65, 6, 4, 3, 23]
+    element_2 = [1, 7, 8, 9, 11, 21, 1]
+
+    for i in element_1:
+        linked_list_3.append(i)
+
+    for i in element_2:
+        linked_list_4.append(i)
+
+    print(union(linked_list_3, linked_list_4))
+    print(intersection(linked_list_3, linked_list_4))
+
+
+def test_case_3():
+    linked_list_3 = LinkedList()
+    linked_list_4 = LinkedList()
+
+    print(union(linked_list_3, linked_list_4))
+    print(intersection(linked_list_3, linked_list_4))
+
+
+if __name__ == '__main__':
+    test_case_1()
+    # 32 -> 65 -> 2 -> 35 -> 3 -> 4 -> 6 -> 1 -> 9 -> 11 -> 21 ->
+    # 4 -> 21 -> 6 ->
+
+    test_case_2()
+    # 65 -> 2 -> 35 -> 3 -> 4 -> 6 -> 1 -> 7 -> 8 -> 9 -> 11 -> 21 -> 23 ->
+
+    test_case_3()
+    # <nothing>

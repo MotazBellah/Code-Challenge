@@ -19,17 +19,6 @@ class Group(object):
     def get_name(self):
         return self.name
 
-parent = Group("parent")
-child = Group("child")
-sub_child = Group("subchild")
-
-
-sub_child_user = "sub_child_user"
-sub_child.add_user(sub_child_user)
-
-child.add_group(sub_child)
-parent.add_group(child)
-
 
 def is_user_in_group(user, group):
     """
@@ -39,15 +28,45 @@ def is_user_in_group(user, group):
       user(str): user name/id
       group(class:Group): group to check user membership against
     """
-    if user == group.get_name():
-        return True
-    if user in group.get_users():
-        return True
-    for grp in group.get_groups():
-        return is_user_in_group(user, grp)
-    return False
+    def helper(g):
+        if user in g.users:
+            return True
+
+        for sub_group in g.groups:
+            is_in_subgroup = helper(sub_group)
+            if is_in_subgroup:
+                return True
+
+        return False
+
+    return helper(group)
 
 
-print(is_user_in_group("child", child)) #True
-print(is_user_in_group("", child))  #False
-print(is_user_in_group("sub_child_user", parent))   #True
+def test_user_in_group(user, group):
+    print(is_user_in_group(user, group))
+
+
+if __name__ == '__main__':
+    parent = Group("parent")
+    child = Group("child")
+    sub_child = Group("subchild")
+
+    sub_child_user = "sub_child_user"
+    sub_child.add_user(sub_child_user)
+
+    child.add_group(sub_child)
+    parent.add_group(child)
+
+    other_group = Group("other")
+
+    test_user_in_group(sub_child_user, sub_child)
+    # True
+
+    test_user_in_group(sub_child_user, child)
+    # True
+
+    test_user_in_group(sub_child_user, parent)
+    # True
+
+    test_user_in_group(sub_child_user, other_group)
+    # False

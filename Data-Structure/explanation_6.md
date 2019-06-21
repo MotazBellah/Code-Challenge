@@ -1,9 +1,11 @@
-In this problem, first I have created a set for making union & intersection of the two linked list. Then I have created a new linked list from the set.
+# Problem 6
 
-Union:
-Time complexity: O(n)
-Space complexity: O(n)
+## Intersection
+Intersecting two lists involves iterating over each list and adding each element to a per-list set, then iterating over
+the intersection between the sets to generate a new list.  This requires `O(m + n)` time and `O(m + n)` space, where `m`
+is the size of the first list, and `n` is the size of the second list.
 
-intersection:
-Time complexity: O(n)
-Space complexity: O(n)
+## Union
+Creating the union of two lists involves iterating over each list and adding each element to a set, then iterating over
+the set to generate a new list.  This requires `O(m + n)` time and `O(m + n)` space, where `m` is the size of the first
+list, and `n` is the size of the second list.
