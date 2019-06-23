@@ -10,19 +10,23 @@ def binary_search(array, target):
       -1: if the target is not found
     '''
     old_array = array
-    while len(old_array) > 2:
-        half_index = int(len(old_array) / 2)
-        half_value = old_array[half_index]
-        print(half_value)
+    while len(old_array) >= 1:
+        mid_index = int(len(old_array) / 2)
+        mid_element = old_array[mid_index]
+        print(mid_element)
         print(old_array)
-        if half_value == target:
+
+        if mid_element == target:                   # we have found the element
             return array.index(target)
-        elif half_value < target:
-            new_array = old_array[half_index:]
+        elif mid_element < target:                  # the target is greater than mid element
+            new_array = old_array[mid_index:]       # we will search only in the right half
             old_array = new_array
-        else:
-            new_array = old_array[:half_index]
+        else:                                        # the target is less than mid element
+            new_array = old_array[:mid_index]        # we will only search in the left half
             old_array = new_array
+
+        if len(old_array)== 1 and old_array[0] != target:
+            break
 
     return -1
 
@@ -32,7 +36,7 @@ def binary_search_method2(array, target):
     end_index = len(array) - 1
 
     while start_index <= end_index:
-        mid_index = (start_index + end_index)//2        # integer division in Python 3
+        mid_index = (start_index + end_index)//2
 
         mid_element = array[mid_index]
 
@@ -48,7 +52,7 @@ def binary_search_method2(array, target):
     return -1
 
 def test_function(test_case):
-    answer = binary_search(test_case[0], test_case[1])
+    answer = binary_search_method2(test_case[0], test_case[1])
     if answer == test_case[2]:
         print("Pass!")
     else:
