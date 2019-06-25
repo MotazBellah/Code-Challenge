@@ -4,6 +4,7 @@ def bubble_sort_1(l):
     while start:
         for time in range(1, len(wakeup_times)):
             prev_time, current_time = wakeup_times[time-1], wakeup_times[time]
+
             if prev_time > current_time:
                 wakeup_times[time-1], wakeup_times[time] = current_time, prev_time
         start -= 1
