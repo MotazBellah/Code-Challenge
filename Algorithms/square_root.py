@@ -1,4 +1,4 @@
-def sqrt(number):
+def sqrt(n):
     """
     Calculate the floored square root of a number
 
