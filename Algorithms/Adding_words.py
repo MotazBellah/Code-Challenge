@@ -29,7 +29,7 @@ class Arith():
 class TestArith(object):
 
     def test_notation(self):
-        i = Arith("three")
+        i = Arith("three") # Declare Arith Class
 
         self.assertEqual(i.add("seven"), "ten")
         self.assertEqual(i.add("eight"), "eleven")
