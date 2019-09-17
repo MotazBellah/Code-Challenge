@@ -1,3 +1,5 @@
+import unittest
+
 # Add two English words together
 # Input - Will be between zero and ten and will always be in lower case
 # Output - Word representation of the result of the addition. Should be in lower case
@@ -22,3 +24,17 @@ class Arith():
         total = numbers.get(self.word) + numbers.get(x)
         # get the key from numbers dict that related to the total number
         return [k for k, v in numbers.items() if v == total][0]
+
+
+class TestArith(object):
+
+    def test_notation(self):
+        i = Arith("three")
+
+        self.assertEqual(i.add("seven"), "ten")
+        self.assertEqual(i.add("eight"), "eleven")
+        self.assertEqual(i.add("zero"), "three")
+
+
+if __name__ == '__main__':
+    unittest.main()
