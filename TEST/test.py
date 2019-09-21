@@ -1,52 +1,68 @@
 import unittest
+from max_money import get_max_money
 
-def get_max_money(x, y=[]):
-    # Check if there are machines for sale
-    if x[0] and y:
-        # Use generator for better performance and efficient memory storage
-        # (x[-1]+1 - i[0]) * i[-1]) => subtract total restructuring days
-        # from the day of the machine has been bought and multiply the value by the machine's profit rate
-        # add the value to (x[1] - i[i]), subtract the total money from machine price
-        # performe this math operations if machine price less than the total money
-        machine_gen = max((((x[-1]+1 - i[0]) * i[-1]) + (x[1]- i[1]) for i in y if x[1] >= i[1]), default=0)
-        # Check if the machine makes more money than the total money
-        # i.e check if buying a machine is worth it
-        if machine_gen > x[1]:
-            return machine_gen
-        else:
-            return x[1]
-    else:
-        return x[1]
+# test cases value
+TEST_CASE = {'Case1': {'x': [6 ,10 ,20],
+                      'y': [[6 ,12 ,1 ,3],
+                            [1, 9 ,1 ,2],
+                            [3 ,2 ,1, 2],
+                            [8 ,20 ,5 ,4],
+                            [4 ,11, 7, 4],
+                            [2 ,10, 9, 1]]
+                      },
+             'Case2': {'x': [0 ,11 ,30],
+                      'y': []
+                      },
+             'Case3': {'x': [1 ,12 ,30],
+                       'y': [[30 ,10 ,5 ,3]]
+                      },
+             'Case4': {'x': [1 ,10 ,2],
+                       'y': [[1 ,10 ,2 ,1]]
+                      },
+             'Case5': {'x': [2 ,10 ,11],
+                       'y': [[1 ,10 ,4 ,3],
+                             [1 ,10 ,9 ,3]]
+                      },
+             'Case6': {'x': [0 ,0 ,0],
+                       'y': []
+                       }
+            }
 
-x = [6 ,10 ,20]
-y = [[6 ,12 ,1 ,3], [1, 9 ,1 ,2]
-,[3 ,2 ,1, 2],
-[8 ,20 ,5 ,4]
-,[4 ,11, 7, 4]
-,[2 ,10, 9, 1]]
+# display the output value
+print('Case 1: {}'.format(get_max_money(TEST_CASE['Case1']['x'], TEST_CASE['Case1']['y'])))
+print('Case 2: {}'.format(get_max_money(TEST_CASE['Case2']['x'], TEST_CASE['Case2']['y'])))
+print('Case 3: {}'.format(get_max_money(TEST_CASE['Case3']['x'], TEST_CASE['Case3']['y'])))
+print('Case 4: {}'.format(get_max_money(TEST_CASE['Case4']['x'], TEST_CASE['Case4']['y'])))
+print('Case 5: {}'.format(get_max_money(TEST_CASE['Case5']['x'], TEST_CASE['Case5']['y'])))
+print('Case 6: {}'.format(get_max_money(TEST_CASE['Case6']['x'], TEST_CASE['Case6']['y'])))
 
-print(get_max_money(x, y))
-# get_max_money([6, 10, 20], [
-#                             [6, 12, 1, 3],
-#                             [1, 9, 1, 2],
-#                             [3, 2, 1, 2],
-#                             [8, 20, 5, 4],
-#                             [4, 11, 7, 4],
-#                             [2, 10, 9, 1]
-#                             ]))
 
 class TestGetMaxMoney(object):
-
+    
     def test_case1(self):
-        fun = get_max_money([6, 10, 20],
-                            [[6, 12, 1, 3],
-                             [1, 9, 1, 2],
-                             [3, 2, 1, 2],
-                             [8, 20, 5, 4],
-                             [4, 11, 7, 4],
-                             [2, 10, 9, 1]])
-        print(fun)
+        fun = get_max_money(TEST_CASE['Case1']['x'], TEST_CASE['Case1']['y'])
         self.assertEqual(fun , 44)
+
+    def test_case2(self):
+        fun = get_max_money(TEST_CASE['Case2']['x'], TEST_CASE['Case2']['y'])
+        self.assertEqual(fun , 11)
+
+    def test_case3(self):
+        fun = get_max_money(TEST_CASE['Case3']['x'], TEST_CASE['Case3']['y'])
+        self.assertEqual(fun , 12)
+
+    def test_case4(self):
+        fun = get_max_money(TEST_CASE['Case4']['x'], TEST_CASE['Case4']['y'])
+        self.assertEqual(fun , 10)
+
+    def test_case5(self):
+        fun = get_max_money(TEST_CASE['Case5']['x'], TEST_CASE['Case5']['y'])
+        self.assertEqual(fun , 33)
+
+    def test_case6(self):
+        fun = get_max_money(TEST_CASE['Case6']['x'], TEST_CASE['Case6']['y'])
+        self.assertEqual(fun , 0)
+
 
 if __name__ == '__main__':
     unittest.main()
