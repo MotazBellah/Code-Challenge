@@ -1,138 +1,52 @@
-def AMC(x, y):
-    total = x[1]
-    # check if there machines for sale
-    if not x[0]:
-        # return the total dollar
-        return x[1]
-    else:
-        print('a')
-        # sort the machines with the bought price
-        # to find the cheapest machine faster
-        machine = sorted(y, key=lambda z: z[1])
-        cheapest_machine = machine[0]
-        # check if the bought price is greater than the total money
-        # OR if the bought process is worth it
-        if (cheapest_machine[1] > total or
-            (x[-1] - cheapest_machine[0]) * cheapest_machine[-1] <= total):
-            print('b')
-            return total
-        # elif (x[-1] - cheapest_machine[0]) * cheapest_machine[-1] <= total:
-        #     print('c')
-        #     return total
+import unittest
 
-        # check if there two machine with same price
-        # take the one with higher profit rate
-        # if profit the same take the one with high resold price
-        # if the resold price the same, take any one
-        elif cheapest_machine[1] == machine[1][1]:
-            print('d')
-            if cheapest_machine[-1] > cheapst_machine[1][-1]:
-                total -= cheapest_machine[1]
-                reset = x[2]+1 - cheapest_machine[0]
-                profit = reset * cheapest_machine[-1]
-                total += profit
-
-            elif cheapest_machine[-1] < machine[1][-1]:
-                total -= machine[1][1]
-                reset = x[2]+1 - machine[1][0]
-                profit = reset * machine[1][-1]
-                total += profit
-
-            elif cheapest_machine[-2] > machine[1][-2]:
-                total -= cheapest_machine[1]
-                reset = x[2]+1 - cheapest_machine[0]
-                profit = reset * cheapest_machine[-1]
-                total += profit
-
-            elif cheapest_machine[-2] < machine[1][-2]:
-                total -= machine[1][1]
-                reset = x[2]+1 - machine[1][0]
-                profit = reset * machine[1][-1]
-                total += profit
-
-            else:
-                total -= cheapest_machine[1]
-                reset = x[2]+1 - cheapest_machine[0]
-                profit = reset * cheapest_machine[-1]
-                total += profit
+def get_max_money(x, y=[]):
+    # Check if there are machines for sale
+    if x[0] and y:
+        # Use generator for better performance and efficient memory storage
+        # (x[-1]+1 - i[0]) * i[-1]) => subtract total restructuring days
+        # from the day of the machine has been bought and multiply the value by the machine's profit rate
+        # add the value to (x[1] - i[i]), subtract the total money from machine price
+        # performe this math operations if machine price less than the total money
+        machine_gen = max((((x[-1]+1 - i[0]) * i[-1]) + (x[1]- i[1]) for i in y if x[1] >= i[1]), default=0)
+        # Check if the machine makes more money than the total money
+        # i.e check if buying a machine is worth it
+        if machine_gen > x[1]:
+            return machine_gen
         else:
-            print('e')
-            total -= cheapest_machine[1]
-            reset = x[2]+1 - cheapest_machine[0]
-            profit = reset * cheapest_machine[-1]
-            total += profit
-
-        return total
-
-
-
-def AMC(x, y):
-    total = x[1]
-
-    if not x[0]:
-        return x[1]
+            return x[1]
     else:
-        print('a')
-        cheapst_machine = sorted(y, key=lambda z: z[1])
-        if cheapst_machine[0][1] > total:
-            print('b')
-            return total
-        elif (x[-1] - cheapst_machine[0][0]) * cheapst_machine[0][-1] <= total:
-            print('c')
-            return total
-        elif cheapst_machine[0][1] == cheapst_machine[1][1]:
-            print('d')
-            if cheapst_machine[0][-1] > cheapst_machine[1][-1]:
-                total -= cheapst_machine[0][1]
-                reset = x[2]+1 - cheapst_machine[0][0]
-                profit = reset * cheapst_machine[0][-1]
-                total += profit
+        return x[1]
 
-            elif cheapst_machine[0][-1] < cheapst_machine[1][-1]:
-                total -= cheapst_machine[1][1]
-                reset = x[2]+1 - cheapst_machine[1][0]
-                profit = reset * cheapst_machine[1][-1]
-                total += profit
+x = [6 ,10 ,20]
+y = [[6 ,12 ,1 ,3], [1, 9 ,1 ,2]
+,[3 ,2 ,1, 2],
+[8 ,20 ,5 ,4]
+,[4 ,11, 7, 4]
+,[2 ,10, 9, 1]]
 
-            elif cheapst_machine[0][-2] > cheapst_machine[1][-2]:
-                total -= cheapst_machine[0][1]
-                reset = x[2]+1 - cheapst_machine[0][0]
-                profit = reset * cheapst_machine[0][-1]
-                total += profit
+print(get_max_money(x, y))
+# get_max_money([6, 10, 20], [
+#                             [6, 12, 1, 3],
+#                             [1, 9, 1, 2],
+#                             [3, 2, 1, 2],
+#                             [8, 20, 5, 4],
+#                             [4, 11, 7, 4],
+#                             [2, 10, 9, 1]
+#                             ]))
 
-            elif cheapst_machine[0][-2] < cheapst_machine[1][-2]:
-                total -= cheapst_machine[1][1]
-                reset = x[2]+1 - cheapst_machine[1][0]
-                profit = reset * cheapst_machine[1][-1]
-                total += profit
+class TestGetMaxMoney(object):
 
-            else:
-                total -= cheapst_machine[0][1]
-                reset = x[2]+1 - cheapst_machine[0][0]
-                profit = reset * cheapst_machine[0][-1]
-                total += profit
-        else:
-            print('e')
-            total -= cheapst_machine[0][1]
-            reset = x[2]+1 - cheapst_machine[0][0]
-            profit = reset * cheapst_machine[0][-1]
-            total += profit
+    def test_case1(self):
+        fun = get_max_money([6, 10, 20],
+                            [[6, 12, 1, 3],
+                             [1, 9, 1, 2],
+                             [3, 2, 1, 2],
+                             [8, 20, 5, 4],
+                             [4, 11, 7, 4],
+                             [2, 10, 9, 1]])
+        print(fun)
+        self.assertEqual(fun , 44)
 
-        return total
-
-# def AMC2(x, y):
-#     if not x[0]:
-#         return x[1]
-#     day = sorted(y, key=lambda z: z[0])
-#     cheapst = sorted(y, key=lambda z: z[1])
-#     if day[-1][0] == y[-1]:
-#         g = x[1] + day[-1][2]
-#     a = cheapst[0]
-#     print(a)
-#     total = x[1] - a[1]
-#     print(total)
-#     rest = (x[2]+1) - a[0]
-#     print(rest)
-#     profit = rest * a[-1]
-#     print(profit)
-#     return total + profit
+if __name__ == '__main__':
+    unittest.main()
