@@ -26,7 +26,7 @@ def polish_notation(expr):
     return stack.pop()
 
 
-class TestPolishNotation(object):
+class TestPolishNotation(unittest.TestCase):
 
     def test_notation(self):
         self.assertEqual(polish_notation('3.5'), 3.5)

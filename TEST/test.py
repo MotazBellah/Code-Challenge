@@ -37,8 +37,8 @@ print('Case 5: {}'.format(get_max_money(TEST_CASE['Case5']['x'], TEST_CASE['Case
 print('Case 6: {}'.format(get_max_money(TEST_CASE['Case6']['x'], TEST_CASE['Case6']['y'])))
 
 
-class TestGetMaxMoney(object):
-    
+class TestGetMaxMoney(unittest.TestCase):
+
     def test_case1(self):
         fun = get_max_money(TEST_CASE['Case1']['x'], TEST_CASE['Case1']['y'])
         self.assertEqual(fun , 44)
