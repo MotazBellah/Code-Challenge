@@ -1,5 +1,10 @@
-#!/usr/bin/env python3.6
+#!/usr/bin/env python3
 def get_max_money(x, y=[]):
+    """Take the informations about the restructuring and machine
+    and return the max money could make during the restructuring
+    inputs: x (list represent the info about the restructuring)
+    y(list represent the info about machine related to restructuring)
+    output: return an integer"""
     # Check if there are machines for sale
     if int(x[0]) and y:
         # Use generator for better performance and for more efficient memory storage and time
