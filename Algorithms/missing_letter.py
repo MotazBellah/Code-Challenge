@@ -1,3 +1,4 @@
+import unittest
 # Write a method that takes an array of consecutive (increasing) letters as
 # input and that returns the missing letter in the array.
 
@@ -20,3 +21,14 @@ def find_missing_letter(chars):
     missi = set(y).difference(x)
     # convert unicode code to unicode character and return it
     return chr(list(missi)[0])
+
+
+class TestFindMissing(unittest.TestCase):
+
+    def test_find_missing(self):
+        self.assertEqual(find_missing_letter(['a','b','c','d','f']), 'e')
+        self.assertEqual(find_missing_letter("['O','Q','R','S']"), 'P')
+
+
+if __name__ == '__main__':
+    unittest.main()
