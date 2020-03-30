@@ -1,3 +1,4 @@
+# Solve the problem using simple recursion
 def fib_rec(n):
     if n == 0:
         return 0
@@ -8,7 +9,7 @@ def fib_rec(n):
 
 # print(fib_rec(10))
 
-
+# Implement the function using dynamic programming to store results (memoization).
 memo = {}
 
 def fib_dyn(n):
@@ -22,4 +23,15 @@ def fib_dyn(n):
 
         return memo[n]
 
-print(fib_dyn(11))
+# print(fib_dyn(5))
+
+# Implement the solution with simple iteration.
+def fib_iter(n):
+    a, b = 0, 1
+
+    for i in range(n):
+        a, b = b, a + b
+
+    return a
+
+print(fib_iter(8))
