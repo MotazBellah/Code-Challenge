@@ -6,21 +6,23 @@ class Reports:
                 yield x
 
     def is_safe(self, lst):
-        is_dec = False
-        is_inc = False
+        is_dec = is_inc = False
         for i in range(1, len(lst)):
-            if lst[i] < lst[i-1]:
+            diff = lst[i] - lst[i - 1]
+
+            if diff == 0:
+                return False
+            if abs(diff) > 3:
+                return False
+
+            if diff < 0:
                 is_dec = True
-                c = lst[i-1] - lst[i]
-            elif lst[i] > lst[i-1]:
-                is_inc = True
-                c = lst[i] - lst[i-1]
             else:
-                return False
-            if c > 3:
-                return False
+                is_inc = True
+
             if is_dec and is_inc:
                 return False
+
         return True
 
     def reactor_mounted(self):
@@ -30,10 +32,11 @@ class Reports:
                 safe += 1
             else:
                 for i in range(len(data)):
-                    tolerated_levels = data[:i] + data[i + 1:]
-                    if self.is_safe(tolerated_levels):
+                    removed_item = data.pop(i)
+                    if self.is_safe(data):
                         safe += 1
                         break
+                    data.insert(i, removed_item)
         return safe
 
     def check_report(self):
