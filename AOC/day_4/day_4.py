@@ -49,13 +49,19 @@ class SearchXShape(SearchXMAS):
 
     def x_search(self):
         c = 0
-        x_cord = {"M", "S"}
+
         for x in range(self.height - 1):
             for y in range(self.width - 1):
                 if self.grid[x][y] == "A":
+                    top_left = self.grid[x - 1][y - 1]
+                    bottom_right = self.grid[x + 1][y + 1]
+                    top_right = self.grid[x - 1][y + 1]
+                    bottom_left = self.grid[x + 1][y - 1]
 
-                    if {self.grid[x - 1][y - 1], self.grid[x + 1][y + 1]} == x_cord and\
-                        {self.grid[x - 1][y + 1], self.grid[x + 1][y - 1]} == x_cord:
+                    if (
+                        (top_left == "M" and bottom_right == "S" or top_left == "S" and bottom_right == "M") and
+                        (top_right == "M" and bottom_left == "S" or top_right == "S" and bottom_left == "M")
+                    ):
                         c += 1
 
         return c
