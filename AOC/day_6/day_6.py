@@ -29,10 +29,15 @@ class GuardGallivant:
         state = self.start
         start_position = "^"
         explored = set()
+        seen_states = set()
 
         while True:
             x, y = self.moves(start_position, state)
 
+            if (state, start_position) in seen_states:
+                return len(explored), explored, True
+
+            seen_states.add((state, start_position))
             if 0 <= x < self.height and 0 <= y < self.width:
                 if self.grid[x][y] == "#":
                     if start_position == "^":
@@ -49,19 +54,20 @@ class GuardGallivant:
             else:
 
                 explored.add((x, y))
-                return len(explored), explored
+                return len(explored), explored, False
 
     def part2(self):
-        old_v, visited_positions = self.neighbors()
+        _, visited_positions, _ = self.neighbors()
         c = 0
 
         for x, y in visited_positions:
+            if not (0 <= x < self.height and 0 <= y < self.width):
+                continue
+
             self.grid[x][y] = "#"
+            _, _, seen = self.neighbors()
 
-
-            v, _ = self.neighbors()
-
-            if v < old_v:
+            if seen:
                 c += 1
 
             self.grid[x][y] = "."
