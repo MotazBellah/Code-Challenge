@@ -14,7 +14,7 @@ class BridgeRepair:
             while rhs:
                 curr = rhs.pop(0)
                 check = []
-                print(curr)
+
                 for n in left_numbers:
                     check.append( n + curr)
                     check.append( n * curr)
@@ -31,10 +31,11 @@ class BridgeRepair:
             while rhs:
                 curr = rhs.pop(0)
                 check = []
-                print(curr)
+
                 for n in left_numbers:
                     check.append( n + curr)
                     check.append( n * curr)
+                    check.append( int(str(n) + str(curr)),)
                 left_numbers = check
 
             if lhs in left_numbers:
@@ -50,5 +51,7 @@ class BridgeRepair:
 if __name__ == "__main__":
     r = BridgeRepair()
     part1 = r.part1()
+    part2 = r.part2()
 
     print(part1)
+    print(part2)
